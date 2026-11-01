@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Кенесары Қасымұлы (1837–1847)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&family=Noto+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0F2A44; --navy2:#1B3D5F; --sand:#F5EFE0; --sand2:#EBE1C8; --card:#FBF7EC; --line:#D6C9A8;
+  --gold:#D9A93F; --brown:#7A4E08; --ink:#2F3F52; --muted:#4A5868;
+  --serif:'Noto Serif',Georgia,serif; --sans:'Noto Sans',Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;font-family:var(--sans);background:var(--navy);color:var(--navy)}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+a{color:inherit}
+#deck{position:fixed;inset:0 0 64px 0}
+.slide{position:absolute;inset:0;overflow-y:auto;padding:clamp(20px,5vw,96px) clamp(18px,7vw,128px) 40px;opacity:0;visibility:hidden;transform:translateX(24px);transition:opacity .35s,transform .35s,visibility .35s}
+.slide.active{opacity:1;visibility:visible;transform:none}
+.slide.dark{background:var(--navy);color:var(--sand)}
+.slide.light{background:var(--sand);color:var(--navy)}
+.slide.light2{background:var(--sand2);color:var(--navy)}
+.wrap{max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(16px,2.4vw,32px)}
+.eyebrow{font-size:clamp(13px,1.5vw,20px);letter-spacing:3px;text-transform:uppercase;font-weight:600;color:var(--brown)}
+.dark .eyebrow{color:var(--gold)}
+h1{font-family:var(--serif);font-size:clamp(36px,6vw,84px);line-height:1.1;font-weight:700}
+h2{font-family:var(--serif);font-size:clamp(28px,4vw,56px);line-height:1.15;font-weight:700}
+h3{font-family:var(--serif);font-size:clamp(20px,2.4vw,32px);font-weight:600;color:var(--brown)}
+.dark h3{color:var(--gold)}
+p,li{font-size:clamp(16px,1.7vw,22px);line-height:1.5}
+.lead{font-size:clamp(18px,2.1vw,28px)}
+.grid{display:grid;gap:clamp(12px,2vw,28px)}
+.g2{grid-template-columns:repeat(2,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:900px){.g2,.g4{grid-template-columns:1fr}}
+@media(min-width:901px) and (max-width:1150px){.g4{grid-template-columns:repeat(2,1fr)}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:clamp(16px,2vw,28px);color:var(--ink);display:flex;flex-direction:column;gap:10px}
+.dark .card{background:var(--navy2);border-color:transparent;color:#E7EDF2}
+.big{font-family:var(--serif);font-size:clamp(32px,4vw,56px);font-weight:700;color:var(--brown);line-height:1.1}
+.band{background:var(--navy);color:var(--sand);border-radius:16px;padding:clamp(14px,2vw,24px) clamp(16px,2.4vw,32px)}
+.dark .band{background:var(--navy2)}
+/* expandable */
+.more{align-self:flex-start;margin-top:4px;padding:8px 16px;border-radius:999px;border:1.5px solid var(--brown);color:var(--brown);font-weight:600;font-size:clamp(14px,1.4vw,18px);transition:background .2s,color .2s}
+.dark .more{border-color:var(--gold);color:var(--gold)}
+.more:hover,.more[aria-expanded="true"]{background:var(--brown);color:var(--sand)}
+.dark .more:hover,.dark .more[aria-expanded="true"]{background:var(--gold);color:var(--navy)}
+.more::after{content:" ▾"} .more[aria-expanded="true"]::after{content:" ▴"}
+.body{border-left:4px solid var(--gold);padding:6px 0 6px 14px;animation:fade .3s}
+.body[hidden]{display:none}
+@keyframes fade{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+/* cover */
+.cover{display:grid;grid-template-columns:1.2fr .8fr;gap:clamp(20px,4vw,64px);align-items:center;min-height:100%}
+@media(max-width:900px){.cover{grid-template-columns:1fr}}
+.cover .portrait{width:100%;border-radius:16px;border:2px solid var(--gold);display:block}
+.facts{background:var(--navy2);border-radius:16px;padding:20px 24px;display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.facts p{font-size:clamp(16px,1.8vw,24px);color:var(--sand)}
+.gold-line{width:120px;height:4px;background:var(--gold);border:0}
+.cta{align-self:flex-start;background:var(--gold);color:var(--navy);padding:14px 28px;border-radius:999px;font-weight:600;font-size:clamp(16px,1.8vw,22px)}
+.cta:hover{filter:brightness(1.08)}
+/* map */
+.maprow{display:grid;grid-template-columns:1.8fr 1fr;gap:clamp(14px,2.4vw,32px)}
+@media(max-width:900px){.maprow{grid-template-columns:1fr}}
+.map{position:relative;aspect-ratio:1040/620;background:var(--sand2);border:2px solid var(--line);border-radius:16px;overflow:hidden}
+.map svg{position:absolute;inset:0;width:100%;height:100%}
+.node{position:absolute;transform:translate(-50%,-50%);width:clamp(24px,3vw,36px);height:clamp(24px,3vw,36px);border-radius:50%;background:var(--navy);border:3px solid var(--sand);box-shadow:0 0 0 0 rgba(217,169,63,.7);animation:pulse 2.2s infinite}
+.node:hover,.node.on{background:var(--brown);animation:none;box-shadow:0 0 0 6px rgba(217,169,63,.5)}
+@keyframes pulse{70%{box-shadow:0 0 0 12px rgba(217,169,63,0)}100%{box-shadow:0 0 0 0 rgba(217,169,63,0)}}
+.lbl{position:absolute;transform:translate(-50%,0);margin-top:clamp(14px,2vw,22px);font-weight:600;font-size:clamp(11px,1.5vw,19px);white-space:nowrap;pointer-events:none;color:var(--navy)}
+.map small{position:absolute;left:14px;bottom:8px;color:var(--muted);font-size:clamp(11px,1.2vw,15px)}
+.info{background:var(--navy);color:var(--sand);border-radius:16px;padding:clamp(16px,2vw,28px);display:flex;flex-direction:column;gap:10px;min-height:180px}
+.info .yr{font-family:var(--serif);font-size:clamp(30px,4vw,52px);font-weight:700;color:var(--gold);line-height:1.1}
+/* table */
+table{width:100%;border-collapse:collapse;border-radius:16px;overflow:hidden}
+th{background:var(--navy);color:var(--sand);text-align:left;padding:12px 16px;font-size:clamp(14px,1.6vw,20px)}
+td{padding:12px 16px;font-size:clamp(14px,1.6vw,20px);vertical-align:top}
+tr.row:nth-child(odd) td{background:var(--card)} tr.row:nth-child(even) td{background:#EFE6CF}
+tr.row{cursor:pointer} tr.row:hover td{background:#E3D5AE}
+tr.det td{background:var(--sand);padding:0 16px}
+tr.det[hidden]{display:none}
+tr.det .body{margin:10px 0}
+.yrc{font-weight:700;white-space:nowrap}
+.yrc::after{content:" ▾";color:var(--brown)} tr.row.open .yrc::after{content:" ▴"}
+/* tabs */
+.tabs{display:flex;gap:10px;flex-wrap:wrap}
+.tab{padding:10px 22px;border-radius:999px;border:2px solid var(--brown);color:var(--brown);font-weight:600;font-size:clamp(15px,1.7vw,22px)}
+.tab[aria-selected="true"]{background:var(--brown);color:var(--sand)}
+.tabpanel[hidden]{display:none}
+.tabpanel ul{display:flex;flex-direction:column;gap:12px;padding-left:22px}
+ol{display:flex;flex-direction:column;gap:14px;padding-left:26px}
+ol a{word-break:break-all;color:var(--gold)}
+/* nav */
+nav{position:fixed;left:0;right:0;bottom:0;height:64px;background:#0A1F33;color:var(--sand);display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 clamp(10px,3vw,40px);z-index:5}
+nav .btn{padding:8px 18px;border-radius:999px;background:var(--navy2);font-weight:600}
+nav .btn:disabled{opacity:.35;cursor:default}
+.dots{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.dot{width:12px;height:12px;border-radius:50%;background:#46607A;padding:0}
+.dot.on{background:var(--gold);transform:scale(1.3)}
+.cnt{font-size:14px;min-width:44px;text-align:center}
+</style>
+</head>
+<body>
+<main id="deck">
+
+<!-- 1. ТИТУЛ -->
+<section class="slide dark" data-title="Титул">
+  <div class="cover">
+    <div class="wrap">
+      <p class="eyebrow">Қазақстан тарихы</p>
+      <h1>Кенесары Қасымұлы</h1>
+      <hr class="gold-line">
+      <h2 style="font-weight:400">1837–1847 жылдардағы ұлт-азаттық қозғалыс</h2>
+      <p class="lead" style="color:#C5D1DC">Уразбаев Сулайман</p>
+      <button class="cta" data-goto="1">Өмірбаянды ашу →</button>
+    </div>
+    <div>
+      <img class="portrait" src="img/kenesary.png" alt="Кенесары Қасымұлы бейнесі">
+      <div class="facts">
+        <p>Туған жылы: <b>1802</b></p>
+        <p>Қайтқан жылы: <b>1847</b></p>
+        <p>Руы: <b>Төре (Шыңғыс тұқымы)</b></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. БИОГРАФИЯ -->
+<section class="slide light" data-title="Биография">
+  <div class="wrap">
+    <p class="eyebrow">02 · Өмірбаяны</p>
+    <h2>Биография</h2>
+    <div class="grid g4">
+      <div class="card xp"><p class="big">1802</p><h3>Туылуы</h3>
+        <p>Көкшетау өңірінде дүниеге келген. Әкесі — Қасым төре, шешесі — Айкүміс. Абылай ханның немересі.</p>
+        <button class="more">Толығырақ</button>
+        <div class="body" hidden><p>Жас кезінен ат үстінде өсіп, мерген болған деп жазылады. Ол Шыңғыс хан әулетінің төре тармағынан шыққан.</p></div></div>
+      <div class="card xp"><p class="big">1837</p><h3>Күрестің басы</h3>
+        <p>Ағасы Саржан бастаған қозғалысқа қатысып, саяси көшбасшыға айналды. 1837 жылы көтеріліс басталды.</p>
+        <button class="more">Толығырақ</button>
+        <div class="body" hidden><p>Кенесары әскери күшке мұқият дайындалды: жасақтар үнемі жаттығып тұрды, қару жасауға қашқын орыс және шетелдік шеберлер тартылды.</p></div></div>
+      <div class="card xp"><p class="big">1841</p><h3>Хан сайлауы</h3>
+        <p>Үш жүздің өкілдері Кенесарыны ақ киізге көтеріп, хан деп жариялады.</p>
+        <button class="more">Толығырақ</button>
+        <div class="body" hidden><p>e-history.kz бойынша 1841 жылы Қазақ хандығы бірыңғай мемлекет ретінде қайта жаңғырды. Ол Кенесары қаза тапқан 1847 жылға дейін ғана өмір сүрді.</p></div></div>
+      <div class="card xp"><p class="big">1847</p><h3>Қазасы</h3>
+        <p>Қырғыз жеріндегі қақтығыста қаза тапты. Қазақ хандығы өмір сүруін тоқтатты.</p>
+        <button class="more">Толығырақ</button>
+        <div class="body" hidden><p>Қаза болған жері — қазіргі Қырғызстан аумағындағы Мәйтөбе деп көрсетіледі (Wikipedia). Қозғалыс осымен аяқталды.</p></div></div>
+    </div>
+    <p class="lead">Кенесары — Шыңғыс хан әулетінің төре тармағынан шыққан, қазақтың соңғы ханы.</p>
+  </div>
+</section>
+
+<!-- 3. МАҚСАТЫ, СЕБЕБІ -->
+<section class="slide light2" data-title="Мақсаты, себебі">
+  <div class="wrap">
+    <p class="eyebrow">03 · Көтеріліс</p>
+    <h2>Мақсаты мен себебі</h2>
+    <div class="grid g2">
+      <div class="card">
+        <h3>Себептері</h3>
+        <div class="xp"><p><b>1822 және 1824 жылғы жарғылар</b></p><button class="more">Ашу</button>
+          <div class="body" hidden><p>1822 жылғы «Сібір қырғыздары туралы жарғы» (Сперанский) хан билігін жойды. 1824 жылы Орынбор қырғыздары туралы жарғы шықты.</p></div></div>
+        <div class="xp"><p><b>Бекіністер шебі</b></p><button class="more">Ашу</button>
+          <div class="body" hidden><p>Орынбор, Петропавл, Ақмола, Семей және басқа бекіністер даланың ішіне ілгерілеп, көшпелі жолдарды бұзды.</p></div></div>
+        <div class="xp"><p><b>Керуен салығы</b></p><button class="more">Ашу</button>
+          <div class="body" hidden><p>Сауда керуендерінен алым жинау құқығы округтік приказдарға өтті.</p></div></div>
+        <div class="xp"><p><b>Салық пен әкімшілік қысым</b></p><button class="more">Ашу</button>
+          <div class="body" hidden><p>Патша үкіметінің салық саясаты қозғалысқа отаршылдыққа қарсы сипат берді (e-history.kz).</p></div></div>
+      </div>
+      <div class="card">
+        <h3>Мақсаты</h3>
+        <div class="xp"><p><b>Хандық билікті қалпына келтіру</b></p><button class="more">Ашу</button>
+          <div class="body" hidden><p>Кенесары дәстүрлі хандық басқаруды қайта орнатуға ұмтылды.</p></div></div>
+        <div class="xp"><p><b>Үш жүзді біріктіру</b></p><button class="more">Ашу</button>
+          <div class="body" hidden><p>1841 жылы үш жүздің өкілдері оны хан етіп көтерді; қозғалыс үш жүздің аумағын қамтыды.</p></div></div>
+        <div class="xp"><p><b>Бекіністерді бұзуды талап ету</b></p><button class="more">Ашу</button>
+          <div class="body" hidden><p>1837 жылы көктемде бірнеше хат жолдап, жаңа бекіністер салудан бас тартуды және салынғандарын бұзуды талап етті. Хаттар жауапсыз қалды.</p></div></div>
+        <div class="xp"><p><b>Жер мен тәуелсіздікті қорғау</b></p><button class="more">Ашу</button>
+          <div class="body" hidden><p>Қозғалыс орыс халқына емес, отаршылдық тәртіпке қарсы бағытталды (e-history.kz).</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. КАРТА -->
+<section class="slide light" data-title="Карта">
+  <div class="wrap">
+    <p class="eyebrow">04 · Карта</p>
+    <h2>Көтеріліс жолы</h2>
+    <div class="maprow">
+      <div class="map" id="map">
+        <svg viewBox="0 0 1040 620" preserveAspectRatio="none" aria-hidden="true">
+          <defs><marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#7A4E08"/></marker></defs>
+          <g stroke="#7A4E08" stroke-width="4" fill="none" marker-end="url(#ah)">
+            <line x1="605" y1="70" x2="688" y2="192"/>
+            <line x1="685" y1="212" x2="365" y2="282"/>
+            <line x1="325" y1="282" x2="160" y2="252"/>
+            <line x1="710" y1="230" x2="800" y2="380" stroke-dasharray="10 8"/>
+            <line x1="820" y1="415" x2="915" y2="520"/>
+          </g>
+        </svg>
+        <button class="node" style="left:57.7%;top:11.3%" data-node="petro" aria-label="Петропавл"></button><span class="lbl" style="left:57.7%;top:11.3%">Петропавл</span>
+        <button class="node" style="left:67.3%;top:33.9%" data-node="akmola" aria-label="Ақмола"></button><span class="lbl" style="left:67.3%;top:33.9%">Ақмола</span>
+        <button class="node" style="left:32.7%;top:46.8%" data-node="torgay" aria-label="Торғай"></button><span class="lbl" style="left:32.7%;top:46.8%">Торғай</span>
+        <button class="node" style="left:12.5%;top:40.3%" data-node="mugo" aria-label="Мұғалжар"></button><span class="lbl" style="left:12.5%;top:40.3%">Мұғалжар</span>
+        <button class="node" style="left:78.8%;top:62.3%" data-node="balkhash" aria-label="Балқаш"></button><span class="lbl" style="left:78.8%;top:62.3%">Балқаш</span>
+        <button class="node" style="left:89.4%;top:84.7%" data-node="maitobe" aria-label="Мәйтөбе"></button><span class="lbl" style="left:89.4%;top:84.7%">Мәйтөбе</span>
+        <small>Схема, масштабсыз · нүктені басыңыз</small>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="info" id="info"><p class="yr" id="infoYr">1837</p><h3 id="infoT" style="color:var(--gold)">Көтерілістің басы</h3><p id="infoP">Картадағы нүктелердің бірін басып, оқиғаны көріңіз.</p></div>
+        <div class="card"><p class="big" style="font-size:clamp(26px,3vw,40px)">1835</p><p>Бекіністер шебі даланың ішіне ілгерілеп, Саржан бастаған күрес жалғасты.</p></div>
+        <div class="card"><p class="big" style="font-size:clamp(26px,3vw,40px)">1837</p><p>Көтеріліс басталды: Рытов отрядына шабуыл, бекіністерді бұзуды талап еткен хаттар.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. НЕГІЗГІ КҮШТЕР -->
+<section class="slide dark" data-title="Негізгі күштер">
+  <div class="wrap">
+    <p class="eyebrow">05 · Күштер</p>
+    <h2>Негізгі күштері</h2>
+    <div class="grid g2">
+      <div class="card">
+        <h3>Қолдаушылар</h3>
+        <div class="xp"><p><b>Шаруа</b> — қарапайым көшпенділер</p><button class="more">Ашу</button>
+          <div class="body" hidden><p>Қозғалыстың негізгі қозғаушы күші — қарапайым көшпенділер болды (e-history.kz).</p></div></div>
+        <div class="xp"><p><b>Батырлар мен билер</b></p><button class="more">Ашу</button>
+          <div class="body" hidden><p>Хан жанындағы кеңесші орган батырлардан, билерден, сұлтандардан және жақын туыстардан құралды.</p></div></div>
+        <div class="xp"><p><b>Хан әскері</b></p><button class="more">Ашу</button>
+          <div class="body" hidden><p>Жасақтар жауынгерлік дайындықтан өтті, қару жасауға шеберлер тартылды. Хан әскерін «айырым» деп атаған.</p></div></div>
+      </div>
+      <div class="card">
+        <h3>Қарсы және тұрақсыз күштер</h3>
+        <div class="xp"><p><b>Сұлтандар</b></p><button class="more">Ашу</button>
+          <div class="body" hidden><p>1837–1838 жылдары сұлтандар көбіне халықпен бірге әрекет етті, кейінгі шешуші кезеңдерде көбі опасыздық жасады (Әл-Фараби университеті дәрісі).</p></div></div>
+        <div class="xp"><p><b>Қоқан хандығы мен датқалар</b></p><button class="more">Ашу</button>
+          <div class="body" hidden><p>1846 жылы қысымға ұшыраған Кенесары басты соққыны Қоқан хандығына бағыттады. Қырғыз манаптары Қоқан қысымынан құтылу үшін Ресей бодандығына өтуге ұмтылды.</p></div></div>
+        <div class="xp"><p><b>Жазалау отрядтары</b></p><button class="more">Ашу</button>
+          <div class="body" hidden><p>Орынбор және Батыс Сібір генерал-губернаторлығынан жіберілген отрядтар: Лебедев, Жемчужников, Дуниковский, Вишневский.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. БАРЫСЫ -->
+<section class="slide light" data-title="Барысы">
+  <div class="wrap">
+    <p class="eyebrow">06 · Барысы</p>
+    <h2>Көтерілістің барысы</h2>
+    <p style="color:var(--muted)">Жолды басып, толығырақ оқыңыз.</p>
+    <table>
+      <tr><th style="width:12%">Жыл</th><th>Оқиға</th><th style="width:30%">Қарсы жақ</th></tr>
+      <tr class="row"><td class="yrc">1837</td><td>Петропавл–Ташкент керуенін күзеткен отрядқа шабуыл, бекіністерді бұзуды талап еткен хаттар</td><td>Хорунжий Рытов отряды</td></tr>
+      <tr class="det" hidden><td colspan="3"><div class="body"><p>Керуенді 55 казак күзетті. Wikipedia бойынша казактар шабуылды тойтарды, ал қазақ тарихнамасындағы дереккөздер отрядты талқандалды деп көрсетеді — бағалар әртүрлі.</p></div></td></tr>
+      <tr class="row"><td class="yrc">1838</td><td>Ақмола бекінісін қоршау</td><td>Ақмола бекінісі</td></tr>
+      <tr class="det" hidden><td colspan="3"><div class="body"><p>Ірі әскери іс-қимылдар 1838 жылдың көктемі мен жазында басталды. Қоршаудан кейін Кенесары Торғай бағытына өтті.</p></div></td></tr>
+      <tr class="row"><td class="yrc">1841</td><td>Үш жүздің өкілдері Кенесарыны хан сайлады</td><td>—</td></tr>
+      <tr class="det" hidden><td colspan="3"><div class="body"><p>Ақ киізге көтеріліп, хан деп жарияланды. Бұл Орта және Кіші жүздегі хан билігін жойған 1822 және 1824 жылғы жарғыларға жауап болды.</p></div></td></tr>
+      <tr class="row"><td class="yrc">1844</td><td>Жазалау экспедициялары, Тобыл бойы мен Мұғалжардағы қақтығыстар</td><td>Лебедев, Жемчужников, Дуниковский</td></tr>
+      <tr class="det" hidden><td colspan="3"><div class="body"><p>Орынбордан Лебедев басқарған жазалау отряды жіберілді. 20–21 шілде түні Кенесары сұлтан Жантөриннің отрядын талқандады. 21 шілдеде Дуниковский отряды Тобыл бойында оның алғы шебін ығыстырды. 22 тамызда орыс әскері Мұғалжар тауларына жетті, бірақ Кенесары қоршаудан шығып кетті.</p></div></td></tr>
+      <tr class="row"><td class="yrc">1846</td><td>Орта жүзден Ұлы жүзге, Қоқан хандығына қарсы бет алды</td><td>Вишневский отряды</td></tr>
+      <tr class="det" hidden><td colspan="3"><div class="body"><p>Қысымға ұшыраған Кенесары Орта жүз аумағынан кетті. Вишневский қазақ аға-сұлтандарымен бірге Балқаш көлі маңында оған жетті, қоршауға төтеп бермеген хан Ұлы жүздің орталық аймақтарына өтті.</p></div></td></tr>
+      <tr class="row"><td class="yrc">1847</td><td>Қырғыз жеріндегі қақтығыста қаза болды</td><td>Қырғыз манаптары</td></tr>
+      <tr class="det" hidden><td colspan="3"><div class="body"><p>Қозғалыс жеңіліспен аяқталды. Қазақ хандығы жойылды.</p></div></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 7. ҚОРЫТЫНДЫ -->
+<section class="slide light2" data-title="Қорытынды">
+  <div class="wrap">
+    <p class="eyebrow">07 · Қорытынды</p>
+    <h2>Тарихи маңызы</h2>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" data-tab="plus">(+) Маңызы</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="minus">(–) Қиындықтары</button>
+    </div>
+    <div class="card">
+      <div class="tabpanel" id="tab-plus"><ul>
+        <li>XIX ғасырдағы ең ірі қозғалыс: ауқымы, ұзақтығы, табандылығы жағынан.</li>
+        <li>Он жыл бойы империяның күші мен қаражатын өзіне аударды.</li>
+        <li>1841 жылы үш жүз бірігіп, хандық қайта жаңғырды.</li>
+      </ul></div>
+      <div class="tabpanel" id="tab-minus" hidden><ul>
+        <li>Сұлтандар мен билердің біразы бөлініп, жазалаушы жаққа өтті.</li>
+        <li>Қырғыз жеріндегі жеңіліс, 1847 жылы хан қаза тапты.</li>
+        <li>Қозғалыс басылып, хандық жойылды.</li>
+      </ul></div>
+    </div>
+    <div class="band xp"><p>Бағалар өзгерді</p><button class="more" style="border-color:var(--gold);color:var(--gold)">Ашу</button>
+      <div class="body" hidden><p>Кеңестік тарихнамада қозғалыс «реакциялық-феодалдық» деп бағаланды, бүгін Кенесары — ұлт-азаттық күрестің көшбасшысы.</p></div></div>
+  </div>
+</section>
+
+<!-- 8. ӘДЕБИЕТТЕР -->
+<section class="slide dark" data-title="Әдебиеттер">
+  <div class="wrap">
+    <p class="eyebrow">08 · Әдебиеттер</p>
+    <h2>Пайдаланылған әдебиеттер</h2>
+    <ol>
+      <li>Қозыбаев М. Қ. «Қазақстан тарихы» еңбектері (оқулықта көрсетілген 320-бет).</li>
+      <li>«Основные этапы, итоги и проблемы освободительных движений в период присоединения Казахстана к России» // e-history.kz. <a href="https://e-history.kz/en/history-of-kazakhstan/show/9575" target="_blank" rel="noopener">https://e-history.kz/en/history-of-kazakhstan/show/9575</a> (қаралған күні: 01.11.2026)</li>
+      <li>Kenesary’s Rebellion // Wikipedia. <a href="https://en.wikipedia.org/wiki/Kenesary%27s_Rebellion" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Kenesary%27s_Rebellion</a> (қаралған күні: 01.11.2026)</li>
+      <li>Лекция 7. Национально-освободительное движение казахского народа под руководством Кенесары Касымова 1837–1847 гг. // КазНУ имени аль-Фараби.</li>
+      <li>«Қазақстан тарихы» порталы e-history. <a href="https://e-history.kz" target="_blank" rel="noopener">https://e-history.kz</a></li>
+    </ol>
+  </div>
+</section>
+
+</main>
+
+<nav>
+  <button class="btn" id="prev">← Артқа</button>
+  <div class="dots" id="dots"></div>
+  <span class="cnt" id="cnt">1 / 8</span>
+  <button class="btn" id="next">Алға →</button>
+</nav>
+
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide')), cur=0;
+  var dots=document.getElementById('dots'), cnt=document.getElementById('cnt');
+  var prev=document.getElementById('prev'), next=document.getElementById('next');
+  slides.forEach(function(s,i){
+    var d=document.createElement('button'); d.className='dot'; d.title=(i+1)+'. '+s.dataset.title;
+    d.setAttribute('aria-label',d.title); d.onclick=function(){go(i)}; dots.appendChild(d);
+  });
+  function go(n){
+    cur=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach(function(s,i){s.classList.toggle('active',i===cur); if(i===cur) s.scrollTop=0});
+    [].forEach.call(dots.children,function(d,i){d.classList.toggle('on',i===cur)});
+    cnt.textContent=(cur+1)+' / '+slides.length;
+    prev.disabled=cur===0; next.disabled=cur===slides.length-1;
+    try{history.replaceState(null,'','#'+(cur+1))}catch(e){}
+  }
+  prev.onclick=function(){go(cur-1)}; next.onclick=function(){go(cur+1)};
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key==='PageDown') go(cur+1);
+    if(e.key==='ArrowLeft'||e.key==='PageUp') go(cur-1);
+  });
+  var x0=null;
+  document.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
+  document.addEventListener('touchend',function(e){
+    if(x0===null) return; var dx=e.changedTouches[0].clientX-x0; x0=null;
+    if(Math.abs(dx)>70) go(cur+(dx<0?1:-1));
+  });
+  [].forEach.call(document.querySelectorAll('[data-goto]'),function(b){b.onclick=function(){go(+b.dataset.goto)}});
+
+  // ашылатын блоктар
+  [].forEach.call(document.querySelectorAll('.xp'),function(xp){
+    var b=xp.querySelector('.more'), body=xp.querySelector('.body');
+    b.setAttribute('aria-expanded','false');
+    b.onclick=function(){
+      var open=body.hidden; body.hidden=!open; b.setAttribute('aria-expanded',open);
+      b.firstChild.nodeValue=open?'Жабу':(b.dataset.t||'Ашу');
+    };
+    b.dataset.t=b.textContent;
+  });
+
+  // кесте жолдары
+  [].forEach.call(document.querySelectorAll('tr.row'),function(r){
+    r.onclick=function(){
+      var d=r.nextElementSibling; d.hidden=!d.hidden; r.classList.toggle('open',!d.hidden);
+    };
+  });
+
+  // қорытынды табтары
+  [].forEach.call(document.querySelectorAll('.tab'),function(t){
+    t.onclick=function(){
+      [].forEach.call(document.querySelectorAll('.tab'),function(o){o.setAttribute('aria-selected',o===t)});
+      document.getElementById('tab-plus').hidden=t.dataset.tab!=='plus';
+      document.getElementById('tab-minus').hidden=t.dataset.tab!=='minus';
+    };
+  });
+
+  // карта
+  var N={
+    petro:['1837','Петропавл','Петропавлдан Ташкентке бара жатқан сауда керуенін күзеткен хорунжий Рытов отрядына шабуыл жасалды. Дереккөздер нәтижесін әртүрлі бағалайды.'],
+    akmola:['1838','Ақмола','1838 жылдың көктемі мен жазында Кенесары Ақмола бекінісін қоршады. Содан кейін Торғай бағытына өтті.'],
+    torgay:['1838','Торғай','Ақмола қоршауынан кейін Кенесары отрядымен Торғайға барды.'],
+    mugo:['1844','Мұғалжар','1844 жылы 22 тамызда Жемчужников экспедициясы Мұғалжар тауларына жетті, бірақ Кенесары қоршаудан шығып кетті.'],
+    balkhash:['1846','Балқаш','1846 жылы Орта жүзден кетіп, Қоқан хандығына қарсы бет алды. Вишневский оны Балқаш көлі маңында қуып жетті.'],
+    maitobe:['1847','Мәйтөбе','1847 жылы қазіргі Қырғызстан жерінде қырғыз манаптарымен қақтығыста қаза тапты. Қозғалыс осымен аяқталды.']
+  };
+  [].forEach.call(document.querySelectorAll('.node'),function(n){
+    n.onclick=function(){
+      [].forEach.call(document.querySelectorAll('.node'),function(o){o.classList.remove('on')});
+      n.classList.add('on'); var d=N[n.dataset.node];
+      document.getElementById('infoYr').textContent=d[0];
+      document.getElementById('infoT').textContent=d[1];
+      document.getElementById('infoP').textContent=d[2];
+    };
+  });
+
+  var h=parseInt((location.hash||'').slice(1),10);
+  go(h>0?h-1:0);
+})();
+</script>
+</body>
+</html>
